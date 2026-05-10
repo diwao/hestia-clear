@@ -1,0 +1,55 @@
+<head>
+  <meta charset="utf-8" />
+  {{ $isHomePage := eq .Title .Site.Title }}
+  {{ $author := default (dict) .Site.Params.author }}
+  {{ $authorName := default .Site.Title (index $author "name") }}
+  {{ $description := cond $isHomePage .Site.Params.description .Summary }}
+  {{ $ogLocale := default .Language.Locale .Site.Params.localeOgp }}
+  <title>
+    {{ .Title }}{{ if not $isHomePage }} - {{ .Site.Title }}{{ end }}
+  </title>
+  {{ hugo.Generator }}
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="{{ $authorName }}" />
+  <meta name="description" content="{{ $description }}" />
+  {{ with .Site.Params.keywords }}
+  <meta name="keywords" content="{{ . }}" />
+  {{ end }}
+  <meta property="og:site_name" content="{{ .Site.Title }}" />
+  <meta property="og:title" content="{{ .Title }}" />
+  <meta property="og:url" content="{{ .Permalink }}" />
+  {{ $shareImage := cond (and (.Params.image) (ne .Params.image ""))
+  (.Params.image | absURL) ("image/theme/og.png" | absURL) }}
+  <meta property="og:image" content="{{ $shareImage }}" />
+  <meta property="og:description" content="{{ $description }}" />
+  <meta property="og:type" content="blog" />
+  <meta property="og:locale" content="{{ $ogLocale }}" />
+  <meta name="twitter:card" content="summary_large_image" />
+  {{ with .Site.Params.twitter }}
+  <meta name="twitter:creator" content="@{{ . }}" />
+  {{ end }}
+  <meta name="twitter:title" content="{{ .Title }}" />
+  <meta name="twitter:url" content="{{ .Permalink }}" />
+  <meta name="twitter:description" content="{{ $description }}" />
+  <meta name="twitter:image:src" content="{{ $shareImage }}" />
+  <link rel="shortcut icon" href="{{ "image/theme/favicon.ico" | relURL }}" />
+  {{ $postcssConfig := "postcss.config.cjs" }}
+  {{ $tailwind := resources.Get "css/main.css" | css.PostCSS (dict "config" $postcssConfig) }}
+  {{ if hugo.IsProduction }} {{ $tailwind = $tailwind | minify | fingerprint "sha384" }}
+  <link
+    rel="stylesheet"
+    href="{{ $tailwind.RelPermalink }}"
+    integrity="{{ $tailwind.Data.Integrity }}"
+    crossorigin="anonymous"
+  />
+  {{ else }}
+  <link rel="stylesheet" href="{{ $tailwind.RelPermalink }}" />
+  {{ end }}
+  <link rel="stylesheet" href="/css/chroma.css" />
+  <link
+    rel="alternate"
+    href="{{ .Site.BaseURL }}index.xml"
+    type="application/rss+xml"
+    title="{{ .Site.Title }}"
+  />
+</head>
