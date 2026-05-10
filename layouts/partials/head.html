@@ -33,8 +33,7 @@
   <meta name="twitter:description" content="{{ $description }}" />
   <meta name="twitter:image:src" content="{{ $shareImage }}" />
   <link rel="shortcut icon" href="{{ "image/theme/favicon.ico" | relURL }}" />
-  {{ $postcssConfig := "postcss.config.cjs" }}
-  {{ $tailwind := resources.Get "css/main.css" | css.PostCSS (dict "config" $postcssConfig) }}
+  {{ $tailwind := resources.Get "css/main.css" | css.PostCSS }}
   {{ if hugo.IsProduction }} {{ $tailwind = $tailwind | minify | fingerprint "sha384" }}
   <link
     rel="stylesheet"

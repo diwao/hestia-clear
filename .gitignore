@@ -1,2 +1,9 @@
-# node_modulesを除外
+# Dependencies
 node_modules/
+
+# Hugo build output
+.hugo_cache/
+exampleSite/.hugo_build.lock
+exampleSite/public/
+exampleSite/resources/
+resources/

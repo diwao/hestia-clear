@@ -2,13 +2,10 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
   content: [
-    "./layouts/**/*.{html,xml}",
+    "../layouts/**/*.{html,xml}",
     "./content/**/*.{md,html}",
-    "./exampleSite/content/**/*.{md,html}",
-    "./themes/**/layouts/**/*.{html,xml}",
-    "./assets/**/*.{js,ts,css}",
-    "./themes/**/assets/**/*.{js,ts,css}",
-    "./static/js/**/*.{js,ts}",
+    "../assets/**/*.{js,ts,css}",
+    "../static/js/**/*.{js,ts}",
   ],
   theme: {
     extend: {
@@ -71,3 +68,4 @@ module.exports = {
   },
   plugins: [require("@tailwindcss/typography")],
 };
+
