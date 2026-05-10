@@ -18,11 +18,11 @@
 
 @layer components {
   .wrap {
-    @apply overflow-hidden;
+    @apply flex min-h-screen flex-col overflow-hidden;
   }
 
   .main {
-    @apply mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8;
+    @apply mx-auto w-full max-w-5xl flex-1 px-4 sm:px-6 lg:px-8;
   }
 
   .main--single {
