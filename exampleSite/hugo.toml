@@ -1,9 +1,11 @@
 baseURL = "http://localhost:1313/"
 title = "Hestia Clear Demo"
-languageCode = "en-us"
+locale = "en-US"
 defaultContentLanguage = "en"
 theme = "hestia-clear"
-paginate = 12
+
+[pagination]
+  pagerSize = 12
 
 [params]
   description = "A clean, minimal Hugo blog theme built with Tailwind CSS and Hugo Pipes."

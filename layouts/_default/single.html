@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="{{ .Language.Locale | default .Language.Lang }}">
 {{ partial "head" . }}
 <body>
   <div id="wrap" class="wrap">
@@ -45,7 +45,7 @@
           {{ end }}
         </ol>
         <div class="post-nav-back">
-          <a class="button-link" href="{{ "/" | relURL }}">Back to article list</a>
+          <a class="button-link" href="{{ .Site.Home.RelPermalink }}">Back to article list</a>
         </div>
       </nav>
     </main>

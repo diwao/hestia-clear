@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="{{ .Language.Locale | default .Language.Lang }}">
   {{ partial "head" . }}
   <body>
     <div id="wrap" class="wrap">
@@ -12,7 +12,7 @@
         </p>
         <p>
           Please check the URL and try reloading, or return to the
-          <a href="/">top page</a>.
+          <a href="{{ .Site.Home.RelPermalink }}">top page</a>.
         </p>
       </main>
     </div>

@@ -1,6 +1,6 @@
 <head>
   <meta charset="utf-8" />
-  {{ $isHomePage := eq .Title .Site.Title }}
+  {{ $isHomePage := .IsHome }}
   {{ $author := default (dict) .Site.Params.author }}
   {{ $authorName := default .Site.Title (index $author "name") }}
   {{ $description := cond $isHomePage .Site.Params.description .Summary }}
@@ -44,7 +44,7 @@
   {{ else }}
   <link rel="stylesheet" href="{{ $tailwind.RelPermalink }}" />
   {{ end }}
-  <link rel="stylesheet" href="/css/chroma.css" />
+  <link rel="stylesheet" href="{{ "css/chroma.css" | relURL }}" />
   <link
     rel="alternate"
     href="{{ .Site.BaseURL }}index.xml"

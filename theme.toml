@@ -8,7 +8,7 @@ description = "A clean, minimal Hugo blog theme built with Tailwind CSS and Hugo
 homepage = "https://github.com/diwao/hestia-clear"
 tags = ["blog", "tailwind", "minimal", "responsive"]
 features = ["Tailwind CSS", "Responsive Design", "Syntax Highlighting"]
-min_version = "0.109.0"
+min_version = "0.152.2"
 
 [author]
   name = "diwao"
