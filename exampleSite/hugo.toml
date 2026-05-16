@@ -1,0 +1,33 @@
+baseURL = "http://localhost:1313/"
+title = "Hestia Clear Demo"
+locale = "en-US"
+defaultContentLanguage = "en"
+theme = "hestia-clear"
+
+[pagination]
+  pagerSize = 12
+
+[params]
+  description = "A clean, minimal Hugo blog theme built with Tailwind CSS and Hugo Pipes."
+  keywords = "hugo, theme, blog, tailwind, minimal"
+  localeOgp = "en_US"
+  github = "diwao"
+  twitter = "_diwao"
+  facebook = "diwao"
+
+[params.author]
+  name = "Hestia Clear"
+  profile = "A sample author profile for previewing the theme footer, avatar, and social links."
+  image = "image/theme/author.png"
+
+[markup]
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = false
+    lineNos = false
+    noClasses = false
+    style = "github"
+
+[security]
+  [security.exec]
+    osEnv = ["(?i)^(PATH|PATHEXT|APPDATA|TMP|TEMP|TERM|NODE_OPTIONS)$"]

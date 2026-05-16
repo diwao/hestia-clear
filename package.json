@@ -1,0 +1,26 @@
+{
+  "name": "hestia-clear",
+  "version": "1.0.0",
+  "description": "A clean, minimal Hugo blog theme built with Tailwind CSS.",
+  "scripts": {
+    "dev": "NODE_OPTIONS=\"--permission --allow-fs-read=$PWD --allow-fs-write=$PWD\" hugo server -D --source exampleSite --themesDir ../.. --cacheDir \"$PWD/.hugo_cache\"",
+    "build": "NODE_OPTIONS=\"--permission --allow-fs-read=$PWD --allow-fs-write=$PWD\" hugo --gc --minify --source exampleSite --themesDir ../.. --cacheDir \"$PWD/.hugo_cache\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diwao/hestia-clear.git"
+  },
+  "author": "diwao",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/diwao/hestia-clear/issues"
+  },
+  "homepage": "https://github.com/diwao/hestia-clear#readme",
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.13",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.35",
+    "postcss-cli": "^10.1.0",
+    "tailwindcss": "^3.4.14"
+  }
+}
