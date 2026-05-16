@@ -1,6 +1,6 @@
 {
   "name": "hestia-clear",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "A clean, minimal Hugo blog theme built with Tailwind CSS.",
   "scripts": {
     "dev": "NODE_OPTIONS=\"--permission --allow-fs-read=$PWD --allow-fs-write=$PWD\" hugo server -D --source exampleSite --themesDir ../.. --cacheDir \"$PWD/.hugo_cache\"",
