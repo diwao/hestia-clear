@@ -8,7 +8,7 @@
         <section class="articles">
           <h2>Recent Post</h2>
           <div class="articles__grid">
-            {{ range (.Paginator 12).Pages }} {{ .Render "li" }} {{ end }}
+            {{ range .Paginator.Pages }} {{ .Render "li" }} {{ end }}
           </div>
         </section>
         {{ if or (.Paginator.HasPrev) (.Paginator.HasNext) }}

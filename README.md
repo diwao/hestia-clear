@@ -16,7 +16,7 @@ Add the theme to your Hugo site:
 path = "github.com/diwao/hestia-clear"
 ```
 
-Install the frontend dependencies in your site and add PostCSS/Tailwind config files at the root of your Hugo project. Hugo will process the theme stylesheet with the consuming site's PostCSS configuration.
+Install the frontend dependencies in your site and add PostCSS/Tailwind config files at the root of your Hugo project. Hugo will process the theme stylesheet with the consuming site's PostCSS configuration. Adjust your Tailwind `content.files` entries so they include your site's content and the theme layouts.
 
 ```bash
 npm install -D postcss postcss-cli autoprefixer tailwindcss @tailwindcss/typography
@@ -34,7 +34,7 @@ my-site/
     hestia-clear/
 ```
 
-This theme intentionally does not pass a custom PostCSS config file name from its templates. Hugo's default PostCSS lookup should use the consuming project's root configuration. The `exampleSite` configuration files in this repository are only for local theme development and preview.
+This theme intentionally does not pass a custom PostCSS config file name from its templates. Hugo's default PostCSS lookup should use the consuming project's root configuration. The root `postcss.config.cjs` and `tailwind.config.cjs` files are also used for this repository's local `exampleSite` preview and include the theme layouts, assets, and example content in Tailwind's scan paths.
 
 ## Development
 
@@ -45,7 +45,7 @@ npm install
 npm run dev
 ```
 
-Open `http://localhost:1313/` after the development server starts. The npm script runs Hugo against `exampleSite` and resolves this repository as the local theme. The PostCSS and Tailwind files inside `exampleSite` are local preview fixtures, not required files for consuming projects.
+Open `http://localhost:1313/` after the development server starts. The npm script runs Hugo against `exampleSite`, resolves this repository as the local theme, and uses the root PostCSS and Tailwind configuration files.
 
 To run Hugo directly, include the local npm binaries in `PATH`:
 

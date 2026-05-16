@@ -3,7 +3,11 @@
   {{ $isHomePage := .IsHome }}
   {{ $author := default (dict) .Site.Params.author }}
   {{ $authorName := default .Site.Title (index $author "name") }}
-  {{ $description := cond $isHomePage .Site.Params.description .Summary }}
+  {{ $pageDescription := default .Summary .Description }}
+  {{ $description := .Site.Params.description }}
+  {{ if not $isHomePage }}
+  {{ $description = default .Site.Params.description $pageDescription }}
+  {{ end }}
   {{ $ogLocale := default .Language.Locale .Site.Params.localeOgp }}
   <title>
     {{ .Title }}{{ if not $isHomePage }} - {{ .Site.Title }}{{ end }}
