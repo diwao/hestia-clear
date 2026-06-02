@@ -194,6 +194,46 @@
     @apply mx-auto block shadow-lg;
   }
 
+  .amazon-card {
+    @apply my-8 flex flex-col gap-4 rounded-lg border border-slate-200 bg-white p-4 text-slate-800 no-underline shadow-sm transition hover:border-slate-300 hover:opacity-100 hover:shadow-md sm:flex-row sm:items-center;
+  }
+
+  .post-content .amazon-card {
+    @apply no-underline;
+  }
+
+  .amazon-card__media {
+    @apply flex shrink-0 items-center justify-center rounded-md bg-slate-50 p-3 sm:h-32 sm:w-32;
+  }
+
+  .amazon-card__media img {
+    @apply max-h-36 w-auto object-contain sm:max-h-28;
+  }
+
+  .amazon-card__body {
+    @apply flex min-w-0 flex-1 flex-col gap-2;
+  }
+
+  .amazon-card__title {
+    @apply text-base font-semibold leading-relaxed text-slate-900;
+  }
+
+  .amazon-card__price {
+    @apply text-lg font-bold text-slate-950;
+  }
+
+  .amazon-card__meta {
+    @apply text-sm text-slate-500;
+  }
+
+  .amazon-card__cta {
+    @apply mt-1 inline-flex w-fit rounded-md border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700;
+  }
+
+  .amazon-card--missing {
+    @apply border-dashed bg-slate-50 shadow-none;
+  }
+
   .post-hr {
     @apply mx-auto my-12 h-px w-full max-w-3xl border-0 bg-slate-200;
   }
