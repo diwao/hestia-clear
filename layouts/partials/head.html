@@ -22,9 +22,18 @@
   <meta property="og:site_name" content="{{ .Site.Title }}" />
   <meta property="og:title" content="{{ .Title }}" />
   <meta property="og:url" content="{{ .Permalink }}" />
-  {{ $shareImage := cond (and (.Params.image) (ne .Params.image ""))
-  (.Params.image | absURL) ("image/theme/og.png" | absURL) }}
-  <meta property="og:image" content="{{ $shareImage }}" />
+  {{ $shareImage := "" }}
+  {{ if $isHomePage }}
+  {{ $shareImage = "image/theme/og.png" | absURL }}
+  {{ end }}
+  {{ with .Params.image }}
+  {{ if ne . "" }}
+  {{ $shareImage = . | absURL }}
+  {{ end }}
+  {{ end }}
+  {{ with $shareImage }}
+  <meta property="og:image" content="{{ . }}" />
+  {{ end }}
   <meta property="og:description" content="{{ $description }}" />
   <meta property="og:type" content="blog" />
   <meta property="og:locale" content="{{ $ogLocale }}" />
@@ -35,7 +44,9 @@
   <meta name="twitter:title" content="{{ .Title }}" />
   <meta name="twitter:url" content="{{ .Permalink }}" />
   <meta name="twitter:description" content="{{ $description }}" />
-  <meta name="twitter:image:src" content="{{ $shareImage }}" />
+  {{ with $shareImage }}
+  <meta name="twitter:image:src" content="{{ . }}" />
+  {{ end }}
   <link rel="shortcut icon" href="{{ "image/theme/favicon.ico" | relURL }}" />
   {{ $tailwind := resources.Get "css/main.css" | css.PostCSS }}
   {{ if hugo.IsProduction }} {{ $tailwind = $tailwind | minify | fingerprint "sha384" }}
