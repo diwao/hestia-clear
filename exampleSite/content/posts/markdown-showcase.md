@@ -47,5 +47,14 @@ Inline code such as `hugo server` should remain legible inside a paragraph. Stro
 
 > A good preview site demonstrates ordinary content first, then edge cases.
 
-The rest of this page returns to normal prose so the transition after a table and quote can be checked.
+## Amazon Shortcode
 
+The Amazon shortcode renders a product card from `data/amazon/products.json`.
+
+{{< amazon asin="B0EXAMPLE1" >}}
+
+Missing product data should not stop a Hugo build.
+
+{{< amazon asin="B0MISSING1" >}}
+
+The rest of this page returns to normal prose so the transition after a table and quote can be checked.

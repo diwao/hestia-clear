@@ -1,0 +1,31 @@
+{{- $asin := .Get "asin" -}}
+{{- $products := default dict hugo.Data.amazon.products -}}
+{{- $product := index $products $asin -}}
+
+{{- if $product -}}
+  {{- $title := default $asin $product.title -}}
+  {{- $url := default "" $product.url -}}
+  {{- $image := default "" $product.image -}}
+  {{- $price := default "" $product.price -}}
+  <a class="amazon-card" href="{{ $url }}" target="_blank" rel="nofollow sponsored noopener">
+    {{- with $image -}}
+      <span class="amazon-card__media">
+        <img src="{{ . }}" alt="{{ $title }}" loading="lazy" decoding="async">
+      </span>
+    {{- end -}}
+    <span class="amazon-card__body">
+      <span class="amazon-card__title">{{ $title }}</span>
+      {{- with $price -}}
+        <span class="amazon-card__price">{{ . }}</span>
+      {{- end -}}
+      <span class="amazon-card__cta">View product</span>
+    </span>
+  </a>
+{{- else -}}
+  <div class="amazon-card amazon-card--missing">
+    <span class="amazon-card__body">
+      <span class="amazon-card__title">Amazon product data is unavailable.</span>
+      <span class="amazon-card__meta">ASIN: {{ $asin }}</span>
+    </span>
+  </div>
+{{- end -}}

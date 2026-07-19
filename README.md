@@ -68,6 +68,32 @@ does not commit generated Tailwind output.
 - Add custom component styles to the `@layer components` block in `assets/css/main.css`.
 - Author profile, social links, OGP locale, favicon, share images, and a GA4 measurement ID via `googleanalytics` can be configured from the consuming Hugo site's params and static assets.
 
+## Amazon Creators API Shortcode
+
+This theme includes an Amazon product card shortcode:
+
+```markdown
+{{< amazon asin="B0XXXXXXX" >}}
+```
+
+The shortcode only reads generated Hugo data from `data/amazon/products.json`. API credentials, Amazon Creators API calls, and any product-data generation workflow should live in the consuming Hugo site or CI build, not in this theme module.
+
+Expected data shape:
+
+```json
+{
+  "B0XXXXXXX": {
+    "asin": "B0XXXXXXX",
+    "title": "Product title",
+    "image": "https://...",
+    "price": "￥1,980",
+    "url": "https://www.amazon.co.jp/..."
+  }
+}
+```
+
+This theme intentionally does not ship a fetch script because the implementation depends on the consuming site's SDK choice, hosting provider, and credential handling.
+
 ## License
 
 MIT License
