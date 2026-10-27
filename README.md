@@ -23,8 +23,28 @@ path = "github.com/diwao/hestia-clear"
 Install the frontend dependencies in your site and add PostCSS/Tailwind config files at the root of your Hugo project. Hugo will process the theme stylesheet with the consuming site's PostCSS configuration. Adjust your Tailwind `content.files` entries so they include your site's content and the theme layouts.
 
 ```bash
-npm install -D postcss postcss-cli autoprefixer tailwindcss @tailwindcss/typography
+npm install -D postcss@^8.5.32 postcss-cli@^10.1.0 autoprefixer@^10.4.20 tailwindcss@^3.4.19 @tailwindcss/typography@^0.5.20
 ```
+
+Before installing, add this override to your site's root `package.json`.
+Typography currently pins an older selector parser; the override selects the
+patched 6.x version while retaining compatibility with this theme's Tailwind 3
+configuration. npm only applies overrides from the root project, so installing
+the theme through Hugo Modules does not apply this setting automatically.
+
+```json
+{
+  "overrides": {
+    "@tailwindcss/typography": {
+      "postcss-selector-parser": "^6.1.5"
+    }
+  }
+}
+```
+
+Commit your site's `package-lock.json`, use `npm ci` for subsequent installs,
+and run `npm audit` when updating dependencies. This repository's lockfile is
+for theme development and does not control dependencies in consuming sites.
 
 When this theme is installed under `themes/hestia-clear`, keep `postcss.config.cjs`, `tailwind.config.cjs`, and `package.json` in your site root:
 
