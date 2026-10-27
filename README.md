@@ -4,8 +4,12 @@ Hestia Clear is a clean, minimal Hugo blog theme built with Tailwind CSS, Hugo P
 
 ## Requirements
 
-- Hugo v0.152.2 or later
+- Hugo v0.168.0 or later
 - Node.js 22 or later
+
+Hugo v0.168.0 is the minimum supported version for security fixes, including
+code-block HTML escaping and restrictions on theme/module file access during
+builds. Keep Hugo up to date with security releases.
 
 ## Setup with Hugo Modules
 
@@ -61,6 +65,15 @@ npm run build
 
 CSS is processed by Hugo Pipes and PostCSS during Hugo builds; this repository
 does not commit generated Tailwind output.
+
+Run the Hugo security regression check after installing the dependencies:
+
+```bash
+node --test scripts/hugo-security.test.mjs
+```
+
+This builds a temporary copy of the example site in development and production
+modes and checks that code-block anchor values cannot inject script elements.
 
 ## Customization
 
