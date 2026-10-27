@@ -114,6 +114,34 @@ node --test scripts/hugo-security.test.mjs
 This builds a temporary copy of the example site in development and production
 modes and checks that code-block anchor values cannot inject script elements.
 
+## Continuous security checks
+
+The `Security and build` GitHub Actions workflow runs on pull requests and
+pushes to `dev` and `main`, on manual dispatch, and every Monday at 09:00 JST.
+It installs the Node.js version from `.nvmrc`, runs a full npm dependency audit
+(including development dependencies), and independently builds the example site
+and runs the XSS regression test with Hugo v0.168.0. Any reported npm
+vulnerability fails the audit job. Install scripts are disabled during CI installs.
+
+Pull requests run with a read-only repository token, without persisted Git
+credentials or repository secrets. The workflow uses `pull_request`, not
+`pull_request_target`, and does not publish the generated site. GitHub may
+require approval before running workflows from external contributors.
+
+Dependabot checks npm dependencies and pinned GitHub Actions weekly and opens
+update pull requests against `dev`. Merge the `.github` configuration into the
+default branch (`main`) to activate scheduled workflows and Dependabot. Scheduled
+workflows audit `main`; pushes and pull requests also check changes to `dev`.
+Enable Dependabot alerts and security updates in the repository's GitHub settings
+if desired; those security updates operate on the default branch.
+
+Review Node.js and Hugo security releases separately: Dependabot does not update
+`.nvmrc`, the Node.js minimum in `package.json`/`package-lock.json`, or the Hugo
+version and archive checksum in the workflow. When updating these versions,
+also update the documented requirements and `theme.toml` as appropriate. Obtain
+Hugo's Linux amd64 extended archive checksum from its official release, and
+update the version and checksum together.
+
 ## Customization
 
 - Adjust Tailwind settings in `tailwind.config.cjs`.
