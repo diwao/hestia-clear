@@ -38,7 +38,6 @@ test('Hugo escapes code-fence lineAnchors in development and production builds',
         env: {
           ...process.env,
           PATH: `${path.join(project, 'node_modules/.bin')}${path.delimiter}${process.env.PATH}`,
-          NODE_OPTIONS: `--permission --allow-fs-read=${project} --allow-fs-write=${project}`,
         },
       });
       assert.equal(result.status, 0, result.error?.message || result.stderr || result.stdout);

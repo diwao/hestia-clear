@@ -29,8 +29,6 @@ theme = "hestia-clear"
     style = "github"
 
 [security]
-  [security.exec]
-    osEnv = ["(?i)^(PATH|PATHEXT|APPDATA|TMP|TEMP|TERM|NODE_OPTIONS)$"]
   [security.node.permissions]
     # Tailwind scans these theme directories outside the example site's root.
     allowRead = [".", "../layouts", "../static/js"]
