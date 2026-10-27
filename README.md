@@ -4,8 +4,19 @@ Hestia Clear is a clean, minimal Hugo blog theme built with Tailwind CSS, Hugo P
 
 ## Requirements
 
-- Hugo v0.152.2 or later
-- Node.js 22 or later
+- Hugo v0.168.0 or later
+- Node.js 24.22.1 or a newer 24.x release
+
+Hugo v0.168.0 is the minimum supported version for security fixes, including
+code-block HTML escaping and restrictions on theme/module file access during
+builds. Keep Hugo up to date with security releases.
+
+Node.js 24.22.1 is the security-patched baseline. This repository's `.nvmrc`
+pins that version, and `engines` with `.npmrc` rejects unsupported Node versions
+during npm installs. Keep the pin and minimum version up to date with Node.js
+24.x security releases. These repository settings are not applied automatically
+to sites consuming the theme through Hugo Modules; use the same Node.js baseline
+in your site's build environment.
 
 ## Setup with Hugo Modules
 
@@ -18,9 +29,31 @@ path = "github.com/diwao/hestia-clear"
 
 Install the frontend dependencies in your site and add PostCSS/Tailwind config files at the root of your Hugo project. Hugo will process the theme stylesheet with the consuming site's PostCSS configuration. Adjust your Tailwind `content.files` entries so they include your site's content and the theme layouts.
 
-```bash
-npm install -D postcss postcss-cli autoprefixer tailwindcss @tailwindcss/typography
+Before installing, add this override to your site's root `package.json`.
+Typography currently pins an older selector parser; the override selects the
+patched 6.x version while retaining compatibility with this theme's Tailwind 3
+configuration. npm only applies overrides from the root project, so installing
+the theme through Hugo Modules does not apply this setting automatically.
+
+```json
+{
+  "overrides": {
+    "@tailwindcss/typography": {
+      "postcss-selector-parser": "^6.1.5"
+    }
+  }
+}
 ```
+
+Then install the frontend dependencies:
+
+```bash
+npm install -D postcss@^8.5.32 postcss-cli@^10.1.0 autoprefixer@^10.4.20 tailwindcss@^3.4.19 @tailwindcss/typography@^0.5.20
+```
+
+Commit your site's `package-lock.json`, use `npm ci` for subsequent installs,
+and run `npm audit` when updating dependencies. This repository's lockfile is
+for theme development and does not control dependencies in consuming sites.
 
 When this theme is installed under `themes/hestia-clear`, keep `postcss.config.cjs`, `tailwind.config.cjs`, and `package.json` in your site root:
 
@@ -41,17 +74,27 @@ This theme intentionally does not pass a custom PostCSS config file name from it
 This repository includes an `exampleSite` for local theme development and visual checks.
 
 ```bash
-npm install
+nvm install
+nvm use
+npm ci
 npm run dev
 ```
+
+The `nvm` commands use `.nvmrc`. If you use another Node version manager,
+select the version in that file before running `npm ci`.
 
 Open `http://localhost:1313/` after the development server starts. The npm script runs Hugo against `exampleSite`, resolves this repository as the local theme, and uses the root PostCSS and Tailwind configuration files.
 
 To run Hugo directly, include the local npm binaries in `PATH`:
 
 ```bash
-PATH="./node_modules/.bin:$PATH" NODE_OPTIONS="--permission --allow-fs-read=$PWD --allow-fs-write=$PWD" hugo server -D --source exampleSite --themesDir ../.. --cacheDir "$PWD/.hugo_cache"
+PATH="./node_modules/.bin:$PATH" hugo server -D --source exampleSite --themesDir ../.. --cacheDir "$PWD/.hugo_cache"
 ```
+
+Hugo enables the Node.js permission model for PostCSS. The example site's
+`security.node.permissions.allowRead` setting grants the additional theme
+directories scanned by Tailwind; no project-wide Node write permission or
+custom `NODE_OPTIONS` is needed.
 
 Generate a production build of the example site with:
 
@@ -61,6 +104,43 @@ npm run build
 
 CSS is processed by Hugo Pipes and PostCSS during Hugo builds; this repository
 does not commit generated Tailwind output.
+
+Run the Hugo security regression check after installing the dependencies:
+
+```bash
+node --test scripts/hugo-security.test.mjs
+```
+
+This builds a temporary copy of the example site in development and production
+modes and checks that code-block anchor values cannot inject script elements.
+
+## Continuous security checks
+
+The `Security and build` GitHub Actions workflow runs on pull requests and
+pushes to `dev` and `main`, on manual dispatch, and every Monday at 09:00 JST.
+It installs the Node.js version from `.nvmrc`, runs a full npm dependency audit
+(including development dependencies), and independently builds the example site
+and runs the XSS regression test with Hugo v0.168.0. Any reported npm
+vulnerability fails the audit job. Install scripts are disabled during CI installs.
+
+Pull requests run with a read-only repository token, without persisted Git
+credentials or repository secrets. The workflow uses `pull_request`, not
+`pull_request_target`, and does not publish the generated site. GitHub may
+require approval before running workflows from external contributors.
+
+Dependabot checks npm dependencies and pinned GitHub Actions weekly and opens
+update pull requests against `dev`. Merge the `.github` configuration into the
+default branch (`main`) to activate scheduled workflows and Dependabot. Scheduled
+workflows audit `main`; pushes and pull requests also check changes to `dev`.
+Enable Dependabot alerts and security updates in the repository's GitHub settings
+if desired; those security updates operate on the default branch.
+
+Review Node.js and Hugo security releases separately: Dependabot does not update
+`.nvmrc`, the Node.js minimum in `package.json`/`package-lock.json`, or the Hugo
+version and archive checksum in the workflow. When updating these versions,
+also update the documented requirements and `theme.toml` as appropriate. Obtain
+Hugo's Linux amd64 extended archive checksum from its official release, and
+update the version and checksum together.
 
 ## Customization
 
