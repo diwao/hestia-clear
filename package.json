@@ -2,9 +2,12 @@
   "name": "hestia-clear",
   "version": "0.1.0",
   "description": "A clean, minimal Hugo blog theme built with Tailwind CSS.",
+  "engines": {
+    "node": ">=24.22.1 <25"
+  },
   "scripts": {
-    "dev": "NODE_OPTIONS=\"--permission --allow-fs-read=$PWD --allow-fs-write=$PWD\" hugo server -D --source exampleSite --themesDir ../.. --cacheDir \"$PWD/.hugo_cache\"",
-    "build": "NODE_OPTIONS=\"--permission --allow-fs-read=$PWD --allow-fs-write=$PWD\" hugo --gc --minify --source exampleSite --themesDir ../.. --cacheDir \"$PWD/.hugo_cache\""
+    "dev": "hugo server -D --source exampleSite --themesDir ../.. --cacheDir \"$PWD/.hugo_cache\"",
+    "build": "hugo --gc --minify --source exampleSite --themesDir ../.. --cacheDir \"$PWD/.hugo_cache\""
   },
   "repository": {
     "type": "git",

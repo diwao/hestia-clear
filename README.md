@@ -5,11 +5,18 @@ Hestia Clear is a clean, minimal Hugo blog theme built with Tailwind CSS, Hugo P
 ## Requirements
 
 - Hugo v0.168.0 or later
-- Node.js 22 or later
+- Node.js 24.22.1 or a newer 24.x release
 
 Hugo v0.168.0 is the minimum supported version for security fixes, including
 code-block HTML escaping and restrictions on theme/module file access during
 builds. Keep Hugo up to date with security releases.
+
+Node.js 24.22.1 is the security-patched baseline. This repository's `.nvmrc`
+pins that version, and `engines` with `.npmrc` rejects unsupported Node versions
+during npm installs. Keep the pin and minimum version up to date with Node.js
+24.x security releases. These repository settings are not applied automatically
+to sites consuming the theme through Hugo Modules; use the same Node.js baseline
+in your site's build environment.
 
 ## Setup with Hugo Modules
 
@@ -67,17 +74,27 @@ This theme intentionally does not pass a custom PostCSS config file name from it
 This repository includes an `exampleSite` for local theme development and visual checks.
 
 ```bash
-npm install
+nvm install
+nvm use
+npm ci
 npm run dev
 ```
+
+The `nvm` commands use `.nvmrc`. If you use another Node version manager,
+select the version in that file before running `npm ci`.
 
 Open `http://localhost:1313/` after the development server starts. The npm script runs Hugo against `exampleSite`, resolves this repository as the local theme, and uses the root PostCSS and Tailwind configuration files.
 
 To run Hugo directly, include the local npm binaries in `PATH`:
 
 ```bash
-PATH="./node_modules/.bin:$PATH" NODE_OPTIONS="--permission --allow-fs-read=$PWD --allow-fs-write=$PWD" hugo server -D --source exampleSite --themesDir ../.. --cacheDir "$PWD/.hugo_cache"
+PATH="./node_modules/.bin:$PATH" hugo server -D --source exampleSite --themesDir ../.. --cacheDir "$PWD/.hugo_cache"
 ```
+
+Hugo enables the Node.js permission model for PostCSS. The example site's
+`security.node.permissions.allowRead` setting grants the additional theme
+directories scanned by Tailwind; no project-wide Node write permission or
+custom `NODE_OPTIONS` is needed.
 
 Generate a production build of the example site with:
 
