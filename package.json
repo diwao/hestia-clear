@@ -21,7 +21,7 @@
   "homepage": "https://github.com/diwao/hestia-clear#readme",
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.13",
-    "autoprefixer": "^10.4.20",
+    "autoprefixer": "^10.7.0",
     "postcss": "^8.5.32",
     "postcss-cli": "^10.1.0",
     "tailwindcss": "^3.4.14"
